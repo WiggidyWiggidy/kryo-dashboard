@@ -1,29 +1,52 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { fetchIdeas } from '../github'
 
-const STORAGE_KEY = 'kryo_ideas'
+const LOCAL_KEY = 'kryo_ideas_local'
 const TAG_OPTIONS = ['Ad Copy', 'Creative', 'Landing Page', 'Offer', 'Audience', 'Product', 'Strategy', 'Other']
 
 export default function IdeaLog() {
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-  const [ideas, setIdeas] = useState(saved)
+  const [ideas, setIdeas] = useState([])
+  const [loading, setLoading] = useState(true)
   const [text, setText] = useState('')
   const [tag, setTag] = useState('Ad Copy')
   const [search, setSearch] = useState('')
   const [filterTag, setFilterTag] = useState('All')
+  const [lastSync, setLastSync] = useState(null)
 
-  function persist(data) {
-    setIdeas(data)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  async function load() {
+    setLoading(true)
+    const remote = await fetchIdeas()
+    const local = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]')
+    // Merge: remote is source of truth, local adds unsync'd entries
+    const remoteIds = new Set(remote.map(i => i.id))
+    const merged = [...remote, ...local.filter(i => !remoteIds.has(i.id))]
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+    setIdeas(merged)
+    setLastSync(new Date())
+    setLoading(false)
   }
 
-  function add() {
+  useEffect(() => { load() }, [])
+
+  function addLocal() {
     if (!text.trim()) return
-    persist([{ id: Date.now(), text: text.trim(), tag, date: new Date().toISOString(), promoted: false }, ...ideas])
+    const entry = { id: `local_${Date.now()}`, text: text.trim(), tag, date: new Date().toISOString(), promoted: false, source: 'manual' }
+    const local = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]')
+    localStorage.setItem(LOCAL_KEY, JSON.stringify([entry, ...local]))
+    setIdeas(prev => [entry, ...prev])
     setText('')
   }
 
-  function del(id) { persist(ideas.filter(i => i.id !== id)) }
-  function toggle(id) { persist(ideas.map(i => i.id === id ? { ...i, promoted: !i.promoted } : i)) }
+  function del(id) {
+    const next = ideas.filter(i => i.id !== id)
+    setIdeas(next)
+    const local = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]')
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(local.filter(i => i.id !== id)))
+  }
+
+  function toggle(id) {
+    setIdeas(ideas.map(i => i.id === id ? { ...i, promoted: !i.promoted } : i))
+  }
 
   const filtered = ideas
     .filter(i => filterTag === 'All' || i.tag === filterTag)
@@ -32,26 +55,32 @@ export default function IdeaLog() {
   return (
     <div>
       <div className="page-title">Idea Log</div>
-      <div className="page-sub">Brain dump your ideas fast — promote the good ones to experiments</div>
+      <div className="page-sub">Talk to Hans on Telegram — ideas appear here automatically</div>
+
+      <div className="data-banner">
+        🔄 Synced from GitHub · {lastSync ? `Last updated ${lastSync.toLocaleTimeString()}` : 'Loading...'} ·
+        <span style={{ cursor: 'pointer', marginLeft: 6, color: 'var(--accent)' }} onClick={load}>↻ Refresh</span>
+      </div>
 
       <div className="card" style={{ marginBottom: 16 }}>
+        <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 10 }}>
+          💬 <strong style={{ color: 'var(--text)' }}>Preferred:</strong> Tell Hans your idea on Telegram — it syncs here automatically.
+          Or add manually below.
+        </div>
         <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
           <div style={{ flex: 1 }}>
             <textarea
               value={text}
               onChange={e => setText(e.target.value)}
-              placeholder="Drop an idea here — copy angle, creative concept, offer idea, anything..."
+              placeholder="Quick idea — ad angle, offer, creative concept, audience to test..."
               style={{ minHeight: 60 }}
-              onKeyDown={e => { if (e.key === 'Enter' && e.metaKey) add() }}
             />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <select value={tag} onChange={e => setTag(e.target.value)} style={{ width: 140 }}>
               {TAG_OPTIONS.map(t => <option key={t}>{t}</option>)}
             </select>
-            <button className="btn btn-primary" onClick={add} style={{ width: 140 }}>
-              Add Idea
-            </button>
+            <button className="btn btn-primary" onClick={addLocal} style={{ width: 140 }}>Add Locally</button>
           </div>
         </div>
       </div>
@@ -65,10 +94,12 @@ export default function IdeaLog() {
         ))}
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="empty-state"><h3>Loading ideas from GitHub...</h3></div>
+      ) : filtered.length === 0 ? (
         <div className="empty-state">
           <h3>No ideas yet</h3>
-          <p>Start a brain dump above. Ideas are sorted newest first.</p>
+          <p>Tell Hans an idea on Telegram — it'll show up here. Or add one above.</p>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -78,19 +109,16 @@ export default function IdeaLog() {
                 <div style={{ fontSize: 14, lineHeight: 1.5 }}>{idea.text}</div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 6, alignItems: 'center' }}>
                   <span className="badge badge-queue">{idea.tag}</span>
+                  {idea.source === 'hans' && <span className="badge badge-running">via Hans</span>}
+                  {idea.source === 'manual' && <span style={{ fontSize: 11, color: 'var(--muted)' }}>manual · local</span>}
                   <span style={{ fontSize: 11, color: 'var(--muted)' }}>
                     {new Date(idea.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                   </span>
-                  {idea.promoted && <span className="badge badge-done">→ Promoted to Experiment</span>}
+                  {idea.promoted && <span className="badge badge-done">→ Promoted</span>}
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-                <button
-                  className="btn btn-ghost"
-                  onClick={() => toggle(idea.id)}
-                  style={{ fontSize: 11, padding: '4px 10px' }}
-                  title="Mark as promoted to ICE Matrix"
-                >
+                <button className="btn btn-ghost" onClick={() => toggle(idea.id)} style={{ fontSize: 11, padding: '4px 10px' }}>
                   {idea.promoted ? 'Unpromote' : '→ Experiment'}
                 </button>
                 <button className="btn btn-danger" onClick={() => del(idea.id)} style={{ fontSize: 12, padding: '4px 8px' }}>✕</button>
