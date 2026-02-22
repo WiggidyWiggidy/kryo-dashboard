@@ -1,41 +1,19 @@
-// GitHub JSON Database — read from public raw URLs
-// Hans writes via API; dashboard reads live from GitHub
+// GitHub data service — reads from everestlabs-workspace repo
+const BASE = 'https://raw.githubusercontent.com/WiggidyWiggidy/everestlabs-workspace/main/data'
 
-const OWNER = 'WiggidyWiggidy'
-const REPO  = 'everestlabs-workspace'
-const BRANCH = 'main'
-
-function rawUrl(path) {
-  return `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${path}?t=${Date.now()}`
+async function fetchJSON(file) {
+  try {
+    const r = await fetch(`${BASE}/${file}?t=${Date.now()}`)
+    if (!r.ok) return null
+    return await r.json()
+  } catch {
+    return null
+  }
 }
 
-export async function fetchIdeas() {
-  try {
-    const res = await fetch(rawUrl('data/ideas.json'))
-    const data = await res.json()
-    return data.ideas || []
-  } catch { return [] }
-}
-
-export async function fetchExperiments() {
-  try {
-    const res = await fetch(rawUrl('data/experiments.json'))
-    const data = await res.json()
-    return data.experiments || []
-  } catch { return [] }
-}
-
-export async function fetchTokens() {
-  try {
-    const res = await fetch(rawUrl('data/tokens.json'))
-    const data = await res.json()
-    return data.sessions || []
-  } catch { return [] }
-}
-
-export async function fetchMarketing() {
-  try {
-    const res = await fetch(rawUrl('data/marketing.json'))
-    return await res.json()
-  } catch { return { dailyLog: [], summary: {}, notes: '' } }
+export const gh = {
+  ideas:       () => fetchJSON('ideas.json'),
+  experiments: () => fetchJSON('experiments.json'),
+  tokens:      () => fetchJSON('tokens.json'),
+  feedback:    () => fetchJSON('feedback.json'),
 }
