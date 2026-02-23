@@ -9,39 +9,42 @@ import {
   TabPanel,
   Heading,
   Container,
+  extendTheme
 } from '@chakra-ui/react';
 import IdeaLog from './components/IdeaLog';
 
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: 'gray.50'
+      }
+    }
+  }
+});
+
 function App() {
   return (
-    <ChakraProvider>
-      <Box minH="100vh" bg="gray.50">
+    <ChakraProvider theme={theme}>
+      <Box minH="100vh">
         <Container maxW="container.xl" py={5}>
           <Heading mb={5}>KRYO Command Centre</Heading>
           <Tabs isLazy>
             <TabList>
-              <Tab>Marketing Performance</Tab>
-              <Tab>Experiment Queue</Tab>
               <Tab>Idea Log</Tab>
+              <Tab>Marketing Performance</Tab>
               <Tab>Token Usage</Tab>
-              <Tab>Live Tokens</Tab>
             </TabList>
 
             <TabPanels>
               <TabPanel>
-                <Box p={4}>Marketing Performance Dashboard (Coming Soon)</Box>
-              </TabPanel>
-              <TabPanel>
-                <Box p={4}>Experiment Queue (Coming Soon)</Box>
-              </TabPanel>
-              <TabPanel>
                 <IdeaLog />
               </TabPanel>
               <TabPanel>
-                <Box p={4}>Token Usage Analytics (Coming Soon)</Box>
+                <Box p={4}>Marketing Performance Dashboard (Coming Soon)</Box>
               </TabPanel>
               <TabPanel>
-                <Box p={4}>Live Token Monitoring (Coming Soon)</Box>
+                <Box p={4}>Token Usage Analytics (Coming Soon)</Box>
               </TabPanel>
             </TabPanels>
           </Tabs>

@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/kryo-dashboard/static/js/main.f3bd08ce.js",
+    "index.html": "/kryo-dashboard/index.html",
+    "main.f3bd08ce.js.map": "/kryo-dashboard/static/js/main.f3bd08ce.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.f3bd08ce.js"
+  ]
+}
