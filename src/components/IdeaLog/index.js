@@ -67,6 +67,12 @@ const IdeaLog = () => {
     const savedIdeas = localStorage.getItem('ideas');
     if (savedIdeas) {
       setIdeas(JSON.parse(savedIdeas));
+    } else {
+      // Load initial data if nothing in localStorage
+      import('../../data/initialData').then(({ initialIdeas }) => {
+        setIdeas(initialIdeas);
+        localStorage.setItem('ideas', JSON.stringify(initialIdeas));
+      });
     }
   }, []);
 

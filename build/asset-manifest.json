@@ -1,10 +1,12 @@
 {
   "files": {
-    "main.js": "/kryo-dashboard/static/js/main.fb93ae75.js",
+    "main.js": "/kryo-dashboard/static/js/main.40a2f403.js",
+    "static/js/833.2e153f5c.chunk.js": "/kryo-dashboard/static/js/833.2e153f5c.chunk.js",
     "index.html": "/kryo-dashboard/index.html",
-    "main.fb93ae75.js.map": "/kryo-dashboard/static/js/main.fb93ae75.js.map"
+    "main.40a2f403.js.map": "/kryo-dashboard/static/js/main.40a2f403.js.map",
+    "833.2e153f5c.chunk.js.map": "/kryo-dashboard/static/js/833.2e153f5c.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.fb93ae75.js"
+    "static/js/main.40a2f403.js"
   ]
 }

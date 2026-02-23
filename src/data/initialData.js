@@ -1,0 +1,124 @@
+export const initialFeatures = [
+  {
+    id: "1",
+    title: "Live Token Usage Monitor",
+    description: "Real-time dashboard module to track token usage, costs, and budget alerts. Essential for maintaining $5 AUD daily budget.",
+    type: "Core Feature",
+    ice_score: {
+      impact: 9,
+      confidence: 8,
+      ease: 7,
+      total: 8.0
+    },
+    complexity: 7,
+    status: "ready",
+    progress: 0,
+    token_cost: 4000,
+    priority: 8.5,
+    created_at: "2026-02-23T00:00:00Z"
+  },
+  {
+    id: "2",
+    title: "Meta Ads Integration",
+    description: "Direct integration with Meta Ads API for real-time performance data and automated optimization",
+    type: "Integration",
+    ice_score: {
+      impact: 8,
+      confidence: 7,
+      ease: 6,
+      total: 7.0
+    },
+    complexity: 8,
+    status: "ready",
+    progress: 0,
+    token_cost: 7500,
+    priority: 7.5,
+    created_at: "2026-02-23T00:00:00Z"
+  },
+  {
+    id: "3",
+    title: "Automated ICE Scoring",
+    description: "AI-powered ICE score calculation for new ideas and experiments based on historical data",
+    type: "Enhancement",
+    ice_score: {
+      impact: 7,
+      confidence: 8,
+      ease: 8,
+      total: 7.7
+    },
+    complexity: 6,
+    status: "ready",
+    progress: 0,
+    token_cost: 5000,
+    priority: 7.2,
+    created_at: "2026-02-23T00:00:00Z"
+  }
+];
+
+export const initialExperiments = [
+  {
+    id: "1",
+    title: "Dubai Professional Morning Routine Campaign",
+    hypothesis: "Targeting Dubai professionals with morning productivity messaging will yield 30% higher CTR",
+    type: "Ad Campaign",
+    ice_score: {
+      impact: 9,
+      confidence: 8,
+      ease: 7,
+      total: 8.0
+    },
+    status: "draft",
+    token_cost: 4000,
+    created_at: "2026-02-23T00:00:00Z",
+    duration_days: 14
+  },
+  {
+    id: "2",
+    title: "Performance Benefits Landing Page Test",
+    hypothesis: "Leading with performance benefits will increase conversion rate by 25%",
+    type: "Landing Page",
+    ice_score: {
+      impact: 8,
+      confidence: 7,
+      ease: 8,
+      total: 7.7
+    },
+    status: "draft",
+    token_cost: 5000,
+    created_at: "2026-02-23T00:00:00Z",
+    duration_days: 21
+  }
+];
+
+export const initialIdeas = [
+  {
+    id: "1",
+    title: "Natural Energy Boost Campaign",
+    description: "Marketing campaign focusing on KRYO as a natural alternative to caffeine",
+    category: "Marketing Campaign",
+    ice_score: {
+      impact: 8,
+      confidence: 7,
+      ease: 8,
+      total: 7.7
+    },
+    token_cost: 3000,
+    status: "new",
+    created_at: "2026-02-23T00:00:00Z"
+  },
+  {
+    id: "2",
+    title: "Installation Process Optimization",
+    description: "Streamline apartment installation process to reduce setup time by 50%",
+    category: "Feature Improvement",
+    ice_score: {
+      impact: 9,
+      confidence: 8,
+      ease: 6,
+      total: 7.7
+    },
+    token_cost: 6000,
+    status: "new",
+    created_at: "2026-02-23T00:00:00Z"
+  }
+];

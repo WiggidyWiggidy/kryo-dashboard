@@ -46,6 +46,12 @@ const FeatureQueue = () => {
     const savedFeatures = localStorage.getItem('features');
     if (savedFeatures) {
       setFeatures(JSON.parse(savedFeatures));
+    } else {
+      // Load initial data if nothing in localStorage
+      import('../../data/initialData').then(({ initialFeatures }) => {
+        setFeatures(initialFeatures);
+        localStorage.setItem('features', JSON.stringify(initialFeatures));
+      });
     }
   }, []);
 

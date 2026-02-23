@@ -46,6 +46,12 @@ const ExperimentQueue = () => {
     const savedExperiments = localStorage.getItem('experiments');
     if (savedExperiments) {
       setExperiments(JSON.parse(savedExperiments));
+    } else {
+      // Load initial data if nothing in localStorage
+      import('../../data/initialData').then(({ initialExperiments }) => {
+        setExperiments(initialExperiments);
+        localStorage.setItem('experiments', JSON.stringify(initialExperiments));
+      });
     }
   }, []);
 
