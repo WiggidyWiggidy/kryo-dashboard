@@ -9,9 +9,13 @@ import {
   TabPanel,
   Heading,
   Container,
-  extendTheme
+  extendTheme,
+  VStack,
+  Text
 } from '@chakra-ui/react';
 import IdeaLog from './components/IdeaLog';
+import FeatureQueue from './components/FeatureQueue';
+import ExperimentQueue from './components/ExperimentQueue';
 
 const theme = extendTheme({
   styles: {
@@ -28,11 +32,18 @@ function App() {
     <ChakraProvider theme={theme}>
       <Box minH="100vh">
         <Container maxW="container.xl" py={5}>
-          <Heading mb={5}>KRYO Command Centre</Heading>
-          <Tabs isLazy>
+          <VStack spacing={4} align="stretch" mb={8}>
+            <Heading>KRYO Command Centre</Heading>
+            <Text color="gray.600">
+              Centralized dashboard for ideas, features, and experiments
+            </Text>
+          </VStack>
+          
+          <Tabs isLazy variant="enclosed-colored">
             <TabList>
               <Tab>Idea Log</Tab>
-              <Tab>Marketing Performance</Tab>
+              <Tab>Feature Queue</Tab>
+              <Tab>Experiment Queue</Tab>
               <Tab>Token Usage</Tab>
             </TabList>
 
@@ -41,7 +52,10 @@ function App() {
                 <IdeaLog />
               </TabPanel>
               <TabPanel>
-                <Box p={4}>Marketing Performance Dashboard (Coming Soon)</Box>
+                <FeatureQueue />
+              </TabPanel>
+              <TabPanel>
+                <ExperimentQueue />
               </TabPanel>
               <TabPanel>
                 <Box p={4}>Token Usage Analytics (Coming Soon)</Box>
