@@ -1,1 +1,122 @@
-[{"id":"1","title":"Test Idea","description":"Improve cooling efficiency","category":"Feature Improvement","ice_score":{"impact":8,"confidence":7,"ease":6,"total":7}}]
+[
+  {
+    "id": "1",
+    "title": "Dubai Luxury Apartment Ad Campaign",
+    "description": "Create targeted ad campaign for luxury apartment residents in Dubai, focusing on morning productivity and wellness benefits",
+    "category": "Marketing Campaign",
+    "ice_score": {
+      "impact": 9,
+      "confidence": 8,
+      "ease": 7,
+      "total": 8.0,
+      "rationale": "High impact due to perfect target market match, strong confidence from market research, relatively easy to execute with existing ad platforms"
+    },
+    "resource_estimate": {
+      "token_cost": {
+        "analysis": 2000,
+        "implementation": 5000,
+        "total": 7000
+      },
+      "time_estimate": "3-5 days",
+      "dependencies": ["Meta Ads access", "Location targeting data"]
+    },
+    "status": "ready",
+    "priority_score": 8.0
+  },
+  {
+    "id": "2",
+    "title": "Performance Benefits Landing Page",
+    "description": "Create high-converting landing page focused on performance benefits: morning productivity, mental clarity, and energy boost",
+    "category": "New Ad Creative",
+    "ice_score": {
+      "impact": 8,
+      "confidence": 9,
+      "ease": 8,
+      "total": 8.3,
+      "rationale": "Direct impact on conversions, proven messaging from research, straightforward implementation"
+    },
+    "resource_estimate": {
+      "token_cost": {
+        "analysis": 3000,
+        "implementation": 4000,
+        "total": 7000
+      },
+      "time_estimate": "2-3 days",
+      "dependencies": ["Conversion tracking setup"]
+    },
+    "status": "ready",
+    "priority_score": 8.3
+  },
+  {
+    "id": "3",
+    "title": "Temperature Control Enhancement",
+    "description": "Improve temperature control precision and user customization options",
+    "category": "Feature Improvement",
+    "ice_score": {
+      "impact": 7,
+      "confidence": 8,
+      "ease": 5,
+      "total": 6.7,
+      "rationale": "Direct user experience improvement, clear technical path, moderate implementation complexity"
+    },
+    "resource_estimate": {
+      "token_cost": {
+        "analysis": 1500,
+        "implementation": 2500,
+        "total": 4000
+      },
+      "time_estimate": "5-7 days",
+      "dependencies": ["Technical specifications", "User feedback"]
+    },
+    "status": "backlog",
+    "priority_score": 6.7
+  },
+  {
+    "id": "4",
+    "title": "Influencer Partnership Strategy",
+    "description": "Develop partnership program with Dubai-based fitness and wellness influencers",
+    "category": "New Strategy",
+    "ice_score": {
+      "impact": 9,
+      "confidence": 7,
+      "ease": 6,
+      "total": 7.3,
+      "rationale": "High potential reach, moderate confidence due to influencer variables, complex coordination required"
+    },
+    "resource_estimate": {
+      "token_cost": {
+        "analysis": 4000,
+        "implementation": 6000,
+        "total": 10000
+      },
+      "time_estimate": "7-14 days",
+      "dependencies": ["Influencer research", "Partnership terms"]
+    },
+    "status": "backlog",
+    "priority_score": 7.3
+  },
+  {
+    "id": "5",
+    "title": "Installation Process Optimization",
+    "description": "Streamline the installation process for apartment units with focus on minimal disruption",
+    "category": "User Experience",
+    "ice_score": {
+      "impact": 8,
+      "confidence": 9,
+      "ease": 7,
+      "total": 8.0,
+      "rationale": "Critical for adoption, high confidence from installation feedback, moderate technical complexity"
+    },
+    "resource_estimate": {
+      "token_cost": {
+        "analysis": 2000,
+        "implementation": 3000,
+        "total": 5000
+      },
+      "time_estimate": "4-6 days",
+      "dependencies": ["Installation team feedback", "Technical documentation"]
+    },
+    "status": "ready",
+    "priority_score": 8.0
+  }
+]
